@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Backoffice_APP.Views.CommandsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Backoffice_APP.Views" 
+             xmlns:viewmodels="clr-namespace:Backoffice_APP.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:CommandsViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Manage orders" FontSize="25"/>
+            <Button Margin="20 0" Command="{Binding GetOrdersCommand}" Content="Refresh Orders" Width="150"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Orders}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID de la commande" DisplayMemberBinding="{Binding _id}" />
+                    <GridViewColumn Header="ID du restaurant" DisplayMemberBinding="{Binding id_restaurant}" />
+                    <GridViewColumn Header="Client" DisplayMemberBinding="{Binding username}" />
+                    <GridViewColumn Header="Date de création" DisplayMemberBinding="{Binding created_at}" />
+                    <GridViewColumn Header="Statut" DisplayMemberBinding="{Binding status}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

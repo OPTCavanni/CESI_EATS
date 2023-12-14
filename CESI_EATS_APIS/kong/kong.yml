@@ -1,0 +1,70 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - host: 10.145.129.44
+    name: identity
+    port: 3000
+    protocol: http
+    routes:
+      - name: identityroute
+        paths:
+          - /auth
+        strip_path: true
+
+  - host: 10.145.129.44
+    name: api
+    port: 3001
+    protocol: http
+    routes:
+      - name: apiroute
+        paths:
+          - /api
+        strip_path: true
+    plugins:
+      - name: jwt
+        enabled: true
+        config:
+          key_claim_name: kid
+          claims_to_verify:
+            - exp
+
+  - host: 10.145.129.44
+    name: articles
+    port: 3010
+    protocol: http
+    routes:
+      - name: articlesroute
+        paths:
+          - /articles
+        strip_path: true
+    plugins:
+      - name: jwt
+        enabled: true
+        config:
+          key_claim_name: kid
+          claims_to_verify:
+            - exp
+
+  - host: 10.145.129.44
+    name: menu
+    port: 3002
+    protocol: http
+    routes:
+      - name: menuroute
+        paths:
+          - /menu
+        strip_path: true
+    plugins:
+      - name: jwt
+        enabled: true
+        config:
+          key_claim_name: kid
+          claims_to_verify:
+            - exp
+
+consumers:
+  - username: identity_server
+    jwt_secrets:
+      - key: "pKtzQAeUDbhtz2wZuY2ocX6gxJ3CTWkl"
+        secret: "vivement_ce_soir_FF"
